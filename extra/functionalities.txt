@@ -1,0 +1,42 @@
+1. add fees 
+
+    1.1 total charged fee for the treatment
+    1.2 totaly amount paid by the patient
+    1.3 remining amount by patient (automatic)
+    1.4 adding remarks for treament 
+    
+2. add symptoms column in db
+
+
+
+3. New 
+
+    - vitals (fields) -> pules, bp, oxygen, weight, vitals (general)
+
+    - profile picture adjustment when uploading 
+
+    - add patient's dignos images
+
+    - due clear button -
+
+    - print prescription functionality  .. 1. diagnos (if exsits) 2.complaints (symptoms) 3. medicine pres 4. all vitals 
+ 
+
+
+
+ ----------------------------------------------- idea
+
+
+ make 2 sections 
+
+ 1st section - in this section all the new iamges select by the user will be shown
+
+ 2n section - this section will have function 
+        
+
+            1st - to show the existing Images
+
+            2nd - tap to delete the image from database
+    
+
+

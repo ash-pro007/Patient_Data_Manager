@@ -1,0 +1,1108 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ patient.name }}'s profile</title>
+
+    <link rel="stylesheet" href="{% static 'style_patient_details.css' %}">
+    <link rel="stylesheet" href="{% static 'style_base_components.css' %}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" 
+    integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" 
+    crossorigin="anonymous">
+
+    <!-- ---------------- from w3 school for icons ---------------- -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    
+    <!-- ---------------- Cooper Libraray for js  ----------------- -->
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.css">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.12/cropper.min.js"></script>
+
+    <!-- -------------- Cooper Libraray for js ends  -------------- -->
+
+    
+    <style>
+        a:hover { text-decoration: none; }
+        
+        a {
+            outline: none;
+        }
+
+
+        #image-preview-container {
+            display: flex;
+            flex-wrap: wrap;
+            margin-top: 10px;
+        }
+        
+        .img-preview {
+            max-width: 150px;
+            max-height: 150px; 
+            margin-right: 10px;
+            margin-bottom: 10px;
+            border: 2px solid #ddd;
+            padding: 5px;
+            border-radius: 5px;
+            object-fit: cover;
+            cursor: pointer; /* Show that the image is clickable */
+            transition: 0.9s;
+        }
+
+        .img-preview:hover {
+            max-width: 200px;
+            max-height: 200px; 
+
+        }
+
+    </style>
+
+</head>
+<body>
+
+    <!-- ------------------------- Nav bar -------------------------  -->
+
+    <nav class="hc-navbar">
+        <div class="hc-navbar-container">
+            <a href="#" class="hc-navbar-brand">Patient Data Manager PDM</a>
+            <button class="hc-navbar-toggler" onclick="toggleMenu()">&#9776;</button>
+            <div class="hc-navbar-menu" id="navbarMenu">
+                <a href="home" class="hc-navbar-item">Home <i class="fa fa-home" style="font-size:15px"></i></a>
+                <a href="#" onclick="showForm()" class="hc-navbar-item">Add treatment for patient</a>
+                <a href="#" class="hc-navbar-item">About</a>
+            
+                <a style="margin-left: 5rem;" href="signout" class="hc-navbar-item">Logout <i class="fa fa-sign-out" style="font-size:15px"></i></a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- ---------------------- Nav bar ends ------------------------ -->
+
+    <!-- ---------------------- Some message here ---------------------- -->
+
+    
+    {% if messages %}
+       {% for message in messages %}
+           <div class="alert {{ message.tags }} alert-dismissible text-center" role="alert">
+               <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span>
+               </button>
+               <!-- <strong>{% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}Error{% else %}{{ message.tags|title }}{% endif %}!
+               </strong> -->
+               <strong>{{ message }}</strong>
+           </div>
+       {% endfor %}
+   {% endif %}
+
+   <!-- ---------------------- Message ends here ---------------------- -->
+
+    
+    <!-- ---------------------- Form to Change Patient's details ---------------------- -->
+    
+    
+    <div id="change-patient-details-form" class="main-container-register-patient-form" >
+        <div class="heading-form-and-info-div">Change Patient Detail Form</div>
+        <div class="secondeary-container-resgister-patinet-form">
+
+            <form id="change-patient-detials-form"  action="{% url 'change_patient_details' %}" method="post" enctype="multipart/form-data" onsubmit="return confirm('Do you really want to save patient prfile with these details?');" class="">
+                {% csrf_token %}
+
+                <input type="text" style="display: none;" value="{{ patient.id }}" id="patient_id_to_change_data" name="patient_id_to_change_data">
+
+                <div class="mb-4 div-container-input">
+                    
+                    <label  class="label-input-register-form">Patient Name</label>
+                    <input type="text" class="inpt-format-register-form" id="name" name="name" placeholder="Enter patient name " value="{{ patient.name }}">
+
+                    
+                    <label  class="inpt-label-placing label-input-register-form" for="cars">Gender</label>
+                    <select   class="inpt-format-register-form" name="gender" id="gender">
+                        <option value="">
+                            {% if patient.gender == 'm'  %}
+                                Male
+                            {% elif patient.gender == 'f'  %}
+                                Female
+                            {% else %} 
+                                Other
+                            {% endif %}
+                        </option>
+                        <option value="m">Male</option>
+                        <option value="f">Female</option>
+                        <option value="o">Other</option>
+                    </select>
+                   
+                    <label class="inpt-label-placing label-input-register-form" for="startDate">Age</label>
+                    <input id="age" name="age" class="inpt-format-register-form"  type="number" max="150" value="{{ patient.age }}" />
+                    
+                    <label class="inpt-label-placing label-input-register-form" for="startDate">First appointment/diagnos</label>
+                    <input id="profile_created_on_or_first_diagnos" name="profile_created_on_or_first_diagnos" class="inpt-format-register-form" type="date" value="{{ profile_created_on_or_first_diagnos }}" />
+            
+                </div>
+
+                <hr>
+
+                <div class="mt-4 mb-4">
+
+                    <label  class=" label-input-register-form">Contact no.</label>
+                    <input max="9999999999999" type="number" class="inpt-format-register-form" id="contact_no" name="contact_no" placeholder="Enter contact no." value="{{ patient.contact_no }}">
+
+                    <label class="inpt-label-placing label-input-register-form">Patient Address</label>
+                    <input  id="inpt-registration-form-address-id" type="text" class="inpt-format-register-form" id="address" name="address" value="{{ patient.address }}">
+
+
+                </div>
+
+                <hr>
+
+
+                <div class="mt-4 mb-5 div-container-textarea ">
+
+                    <label  class="label-textarea-register-form">Seeing Doctor for</label>
+                    <textarea class="textarea-form-and-info" id="problem" name="problem" rows="3">{{ patient.problem }}</textarea>
+              
+                    <label  class="label-textarea-register-form">Medical History</label>
+                    <textarea class="textarea-form-and-info" id="medical_history" name="medical_history" rows="3">{{ patient.medical_history }}</textarea>
+            
+                </div>
+                <div  class="mb-5 div-container-textarea ">
+                    <label  class="label-textarea-register-form">Operation History</label>
+                    <textarea class="textarea-form-and-info" id="operation_history" name="operation_history" rows="3">{{ patient.operation_history }}</textarea>
+           
+                    <label  class="label-textarea-register-form">Other detials</label>
+                    <textarea class="textarea-form-and-info" id="other_details" name="other_details" rows="3">{{ patient.other_details }}</textarea>
+                </div>
+
+                <hr>
+                
+                <div class="mb-3">
+
+                    <!-- ------------------------------ image previewer  ------------------------------ -->
+
+                    <input type="file" id="imageUpload" name="image" accept="image/*" onchange="previewImage(event)">
+        
+                    <!-- Cropping area -->
+                    <div style="display: none;" id="cropContainer" class="cropped-image-container">
+                        <img id="imagePreview" style="max-width: 100%;">
+                    </div>
+                    
+                    <!-- Hidden field to store cropped image data -->
+                    <input type="hidden" id="croppedImage" name="cropped_image">
+
+                    <!-- --------------------------- image previewer ends  ---------------------------- -->
+                    
+                <hr>
+                  <div class="container-all-form-btns">
+                    
+                    <button style="display: none; border-radius: 50px; margin-right:10rem" id='btn-submit-registration-form-with-image-id' class=" btn btn-primary btn-submit-regis-form register-form-btn-shape" type="button" onclick="cropImage()">Submit</button>
+                      
+
+                    <button id='btn-submit-registration-form-without-image-id' style="border-radius: 50px; " type="submit" class="mr-5 btn btn-primary btn-submit-regis-form register-form-btn-shape">Submit</button>
+                    
+
+                    <button style="border-radius: 50px;" type="reset"  onclick="showChangePatientForm()" class="ml-5 btn btn-danger btn-hide-regis-form register-form-btn-shape">Cancel</button>
+                  </div>
+                </div>
+
+
+            
+                
+                
+            </form>
+    
+
+        </div>
+
+    </div>
+
+
+    <!-- ---------------------- Form to change patient details ends here ---------------------- -->
+    
+
+
+ 
+
+
+    <!-- ---------------------- Patient Details div ---------------------- -->
+
+    <!-- <div class="main-container">
+
+        <div  class="main-div-forl column" id="{{ patient.id }}">
+            <div class="div-heading">{{ patient.name }}</div>
+            <hr>
+
+            <div class="div-div-img-horizontal"> 
+                
+                <div >
+                    <table class="table">
+                        <tr >
+                            <th class="field-headings">Id</th>
+                            <td class="field-values">{{ patient.id }}</td>
+                        </tr>
+                        <tr >
+                            <th class="field-headings">Name</th>
+                            <td class="field-values">{{ patient.name }}</td>
+                        </tr>
+                       
+                        <tr >
+                            <th class="field-headings">Gender</th>
+                            <td class="field-values">
+                                {% if patient.gender == 'm'  %}
+                                    Male
+                                {% elif patient.gender == 'f'  %}
+                                    Female
+                                {% else %} 
+                                    Other
+                                {% endif %}
+                            </td>
+                        </tr>
+                        <tr >
+                            <th class="field-headings">Age</th>
+                            <td class="field-values">{{ patient.age }}</td>
+                        </tr>
+                    </table>
+            
+                    
+                </div>
+                <div >
+                    
+                        {% if patient.img.url != ''  %}
+                            <img id="patient-img-cont" class="patient-pi" src="{{ patient.img.url }}" alt="" onclick="showImgInBigSize()" >
+
+                        {% else  %}
+                            <img id="patient-img-cont"  class="patient-pi" src="../static/imgs/default_patient_img.jpg" alt="" onclick="showImgInBigSize()"> 
+                        {% endif %}
+
+                    
+                </div>
+            </div>
+    
+            <table class="table">
+                <tr >
+                    <th class="field-headings">Diagnos</th>
+                    <td class="field-values">{{ patient.problem }}</td>
+                </tr>
+                <tr >
+                    <th class="field-headings">Medical History: </th>
+                    <td class="field-values">{{ patient.medical_history }}</td>
+                </tr>
+                <tr >
+                    <th class="field-headings">Operation History: </th>
+                    <td class="field-values">{{ patient.operation_history }}</td>
+                </tr>
+                <tr >
+                    <th class="field-headings">Other details: </th>
+                    <td class="field-values">{{ patient.other_details }}</td>
+                </tr>
+
+                <tr >
+                    <th class="field-headings">Contact No. </th>
+                    <td class="field-values">  {{ patient.contact_no }}</td>
+                </tr>
+
+                <tr >
+                    <th class="field-headings">Address </th>
+                    <td class="field-values">  {{ patient.address }}</td>
+                </tr>
+
+
+
+            </table>
+    
+            <div class="div-click-to-go">
+                {% csrf_token %}
+    
+              
+                <a id="btn-edt-profile" style="color: #47b3a8;" class="shadow-btn-2 btn-edt-profile" onclick="showChangePatientForm()">Click to edit Profile</a>   
+
+                
+                <a id="btn-add-treatment"  href="#" onclick="showForm()" style="margin-top: 20px;  width: 15rem;" class="shadow-btn-2" >Add treatment for patient</a>
+              
+            </div>
+    
+            
+            {% if total_remaining_amt > 0 %}
+
+            <div style="color: rgb(255, 57, 57); margin-top:40px" class="div-heading">Total Fees due: {{ total_remaining_amt }}</div>
+            
+            {% else %}
+            
+            <div style="color: rgba(0, 189, 85, 0.815); margin-top:40px" class="div-heading">All payments are clear</div>
+
+            {% endif %}
+
+        </div>
+
+       
+       
+
+       
+    </div> -->
+
+
+    <div class="mb-2">
+        <div class="heading-form-and-info-div">{{ patient.name }}</div>
+       
+        <div class="secondeary-container-resgister-patinet-form">
+
+            <div class="mb-4 div-container-input">
+
+                <div style="display: flex;">
+                    
+                    <div>
+                        {% if patient.img.url != ''  %}
+                            <img id="patient-img-cont" class="patient-pi" src="{{ patient.img.url }}" alt="" onclick="showImgInBigSize()" >
+                        {% else  %}
+                            <img id="patient-img-cont"  class="patient-pi" src="../static/imgs/default_patient_img.jpg" alt="" onclick="showImgInBigSize()"> 
+                        {% endif %}
+                    </div>
+
+                    <div>
+                        <label  class="label-input-register-form">Patient ID</label>
+                        <label type="text" class="inpt-format-register-form">{{ patient.id }}</label>
+
+                        
+                        <label  class="inpt-label-placing label-input-register-form" for="cars">Gender</label>
+                        
+                        <label type="text" class="inpt-format-register-form">
+                            {% if patient.gender == 'm'  %}
+                                Male
+                            {% elif patient.gender == 'f'  %}
+                                Female
+                            {% else %} 
+                                Other
+                            {% endif %}
+                        </label>
+
+                    
+                        <label class="inpt-label-placing label-input-register-form" for="startDate">Age</label>
+                        <label type="text" class="inpt-format-register-form">{{ patient.age }}</label>
+
+                    
+
+                    </div>
+
+                    
+                
+                </div>
+                    
+                <div style="margin-left: 16rem; margin-top: -5rem; margin-bottom:5rem">
+
+                        
+                    <label class="inpt-label-placing label-input-register-form" for="startDate">First appointment/diagnos</label>
+                    <label type="text" class="inpt-format-register-form">{{ patient.profile_created_on_or_first_diagnos }}</label>
+    
+        
+                </div>
+
+              
+            </div>
+
+            <hr>
+
+            <div class="mt-4 mb-4">
+
+                <label  class=" label-input-register-form">Contact no.</label>
+                <label type="text" class="inpt-format-register-form">{{ patient.contact_no }}</label>
+
+
+                <label class="inpt-label-placing label-input-register-form">Patient Address</label>
+                <label type="text" class="inpt-format-register-form">{{ patient.address }}</label>
+
+
+
+            </div>
+
+            <hr>
+
+
+            <div class="mt-4 mb-5 div-container-textarea ">
+
+                <label  class="label-textarea-register-form">Seeing Doctor for</label>
+                <textarea  class="textarea-form-and-info" id="problem" name="problem" rows="3">{{ patient.problem }}</textarea>
+            
+                <label  class="label-textarea-register-form">Medical History</label>
+                <textarea class="textarea-form-and-info" id="medical_history" name="medical_history" rows="3">{{ patient.medical_history }}</textarea>
+        
+            </div>
+            <div  class="mb-5 div-container-textarea ">
+                <label  class="label-textarea-register-form">Operation History</label>
+                <textarea class="textarea-form-and-info" id="operation_history" name="operation_history" rows="3">{{ patient.operation_history }}</textarea>
+        
+                <label  class="label-textarea-register-form">Other detials</label>
+                <textarea class="textarea-form-and-info" id="other_details" name="other_details" rows="3">{{ patient.other_details }}</textarea>
+            </div>
+
+            <hr>
+
+        
+
+            <div class="div-click-to-go">
+                {% csrf_token %}
+    
+              
+                <a id="btn-edt-profile" style="color: #47b3a8;" class="shadow-btn-2 btn-edt-profile" onclick="showChangePatientForm()">Click to edit Profile</a>   
+                
+                <a id="btn-add-treatment"  href="#" onclick="showForm()"  class="shadow-btn-2" >Add treatment for patient</a>
+
+            </div>
+            
+    
+        </div>
+
+
+    </div>
+
+
+    <!-- -------------------- Patient Details div ends -------------------- -->
+    
+    <hr>
+    
+    <div class="mt-5 secondeary-container-resgister-patinet-form" >
+
+        <div class="remaining-fees-table-heading">Fee Description</div>
+        
+        {% if total_remaining_amt > 0 %}
+            
+            <div >
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Treatment No.</th>
+                            <th>Treatment no</th>
+                            <th>Remaining amout</th>
+                        </tr>
+                    </thead>
+                    
+                    {% for detail in patient_all_treatment_details %}
+                    
+                    
+                        {% if detail.fees_remaining > 0 %}
+                            
+                            <tr>
+                                <td>{{ detail.n_th_treatment }}</td>
+                                <td>{{ detail.current_checkup_date }}</td>
+                                <td>{{  detail.fees_remaining }}</td>
+                            </tr>
+                        {% endif %}
+
+                        {% endfor %}
+                </table>
+            </div>
+
+            <hr>
+
+        {% endif %}
+
+        {% if total_remaining_amt > 0 %}
+        <div style="color: rgb(255, 57, 57); " class="div-heading div-bg-show-all-dues-in-patient-detail">Total Fees due: {{ total_remaining_amt }}</div>
+        <form action="{% url 'clear_all_dues' %}" method="post" enctype="multipart/form-data"  onsubmit="return confirm('Are you really want to clear all the due for patient: {{patient.name}}')" > 
+            {% csrf_token %}
+            <input style="display:none" id="patient_id_to_clear_due" name="patient_id_to_clear_due" type="text" value="{{ patient.id}}" >
+            <button id="btn-clear-dues" type="submit"  class="shadow-btn-2" >Clear all dues </button>
+        
+        </form>
+        {% else %}
+        
+        <div  class="div-heading div-bg-show-no-dues-in-patient-detail">All payments are clear</div>
+
+        {% endif %}
+    </div>
+
+    <!-- ---------------- Main container that shows all the treatment of the patients ----------------  -->
+
+
+
+    <hr class="mt-5">
+
+    <h3 style="font-size: 2.8rem;" class="heading-all-details">All treatemnt details</h3>
+
+
+    {% for detail in patient_all_treatment_details %}
+
+    <div class="mt-4 secondeary-container-resgister-patinet-form">
+ 
+            <div style="display: flex; margin-bottom:2.5rem">
+                <div style="width: fit-content;" class="mb-4 div-container-input  background-for-label-treatment-no">
+                    <label class="label-input-register-form background-for-label-treatment-no">Treatment No.</label>  <!-- Problem in detail -->
+                    <label type="number" class="inpt-format-register-form input-vital-class">{{ detail.n_th_treatment }} </label>
+                </div>
+                <div class="hr-like-cut-for-seperation"></div>
+            </div>
+
+            
+
+            <div class="mb-5 div-container-textarea">
+                <label class="label-textarea-register-form">Dignosis</label>  <!-- Problem in detail -->
+                <div class="textarea-form-and-info" id="problem" name="problem" rows="3">{{ detail.problem_detail }}</div>
+
+                <label class="label-textarea-register-form">Symptoms</label>  <!-- Problem in detail -->
+                <div class="textarea-form-and-info" id="problem" name="problem" rows="3">{{ detail.symptoms }}</div>
+
+            </div>
+
+            <hr>
+
+                <div class="mb-4 div-container-input">
+                    
+                    <label class="label-input-register-form">Blood Pressure</label>
+                    <label type="number" class="mr-4 inpt-format-register-form label-input-vital-class">{{ detail.blood_pressure }} <label for="" class="vitals-unit-shot">( mmHg )</label></label>
+                    
+                    <label class="label-input-register-form">Oxygen</label>
+                    <label type="number" class="mr-4 inpt-format-register-form label-input-vital-class">{{ detail.oxygen }} <label for="" class="vitals-unit-shot">( % )</label></label>
+
+                    <label  class="label-input-register-form">Pulse</label>
+                    <label type="number" class="mr-4 inpt-format-register-form label-input-vital-class">{{ detail.pulse }} <label for="" class="vitals-unit-shot">( BPM )</label></label>
+
+
+                    <label  class="label-input-register-form">Sugar</label>
+                    <label type="number" class="mr-4 inpt-format-register-form label-input-vital-class">{{ detail.sugar }} <label for="" class="vitals-unit-shot">( mmol/L )</label></label>
+
+                    <label  class="label-input-register-form">Weight</label>
+                    <label type="number" class="mr-4 inpt-format-register-form label-input-vital-class">{{ detail.weight }} <label for="" class="vitals-unit-shot">( kgs )</label></label>
+
+                    
+                    <div class="mt-5 mb-5 div-container-textarea">
+                        <label  class="mr-2 label-input-register-form">Vitals (Extra)</label>
+                        <textarea class="textarea-form-and-info">{{ detail.vitals_extra }}</textarea>
+                    </div>
+                    
+                </div>
+
+            <hr>
+
+         
+
+            <div class="mb-5 div-container-textarea">
+                <label class="label-textarea-register-form">Treatmentment Given</label>  <!-- Problem in detail -->
+                <textarea class="textarea-form-and-info" id="treatment_given" name="treatment_given" rows="3">{{ detail.treatment_given }}</textarea>
+
+                <label class="label-textarea-register-form">Medical Prescribed</label>  <!-- Problem in detail -->
+                <textarea class="textarea-form-and-info"  id="medicine_prescribed" name="medicine_prescribed" rows="3">{{ detail.medicine_prescribed }}</textarea>
+            </div>
+                
+            <hr>
+            
+
+            <div class="mb-4 div-container-input">
+                <label class="mt-2 label-input-register-form" for="startDate">Current checkup date</label>
+                <label class="inpt-format-register-form" >{{detail.current_checkup_date  }}</label>
+
+                <label class="inpt-label-placing label-input-register-form" for="startDate">Next checkup date</label>
+                <label  class="inpt-format-register-form">{{ detail.next_checkup_date }}</details></label>
+
+            </div>
+
+            <hr>
+
+            <div class="mb-4 div-container-input">
+                    
+                <label class="label-input-register-form">Fess charged</label>
+                <label type="number" class="mr-5 inpt-format-register-form input-vital-class" >{{ detail.fees_charged }}</details></label>
+                
+                <label class="label-input-register-form">Fees paid</label>
+                <label type="number" class="mr-5 inpt-format-register-form input-vital-class" >{{ detail.fees_paid }}</label>
+
+
+                <label  class="label-input-register-form">remaining</label>
+                <label type="number" class="mr-5 inpt-format-register-form input-vital-class" >{{ detail.fees_remaining }}</label>
+
+            </div>
+
+            <hr>
+
+            <label  class="label-input-register-form">Treatment Images </label>
+
+            <div style="display: flex-box;">
+                {% for data in img_list_of_patient %}
+                    {% if data.treatment_id == detail.id %}
+                        <img class="img-preview" src="{{ data.trt_img.url }}" alt="Patient Image" />
+                    {% endif %}
+                        
+        
+                {% endfor %}
+
+            </div>
+
+
+            <hr>
+
+            <div class="mt-5 mb-5 div-container-textarea">
+                <label class="label-textarea-register-form">Remarks</label>  <!-- Problem in detail -->
+                <label class="textarea-form-and-info" >{{ detail.remarks }}</label>                
+            </div>
+
+            <hr>
+
+           <div style="display: flex;">
+
+            
+            <form action="{% url 'print_receipt' %}" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+
+                <input style="display: none;" type="text" value="{{ patient.id }}" id="patient_id_to_print_trt_det" name="patient_id_to_print_trt_det">
+
+                <input style="display: none;" type="text" value="{{ detail.id }}" id="treatment_id_pk" name="treatment_id_pk">
+            
+                <button  formtarget="_blank" style="border-radius: 50px; width:fit-content;" class="mr-5 btn btn-primary btn-submit-regis-form register-form-btn-shape" target="_blank" type="submit" >Print Receipt</button>
+                
+            </form>
+
+            <form  action="{% url 'change_treatment_details' %}" method="post" enctype="multipart/form-data" onsubmit="disableButton();" >
+                {% csrf_token %}
+                
+                <input style="display: none;" value="{{ patient.id }}" name="patient_id_change_treatment" id="patient_id_change_treatment">
+                <input style="display: none;" value="{{ detail.n_th_treatment }}" name="treatment_no" id="treatment_no">
+
+                <input style="display: none;" value="{{ patient.name }}" name="patient_name_change_treat" id="patient_name_change_treat">
+
+                <button id="{{ detail.n_th_treatment }}" type="submit"  style="border-radius: 50px; color: #fff" class="mr-5 btn btn-warning btn-submit-regis-form register-form-btn-shape"> Edit </button>
+            </form>
+
+            <!-- <form  action="{% url 'delete_treatment_detail' %}" method="post" enctype="multipart/form-data" onsubmit="disableButton();" >
+                {% csrf_token %}
+                
+                <input style="display: none;" value="{{ patient.id }}" name="patient_id_detete_treatment" id="patient_id_detete_treatment">
+                <input style="display: none;" value="{{ detail.n_th_treatment }}" name="treatment_no" id="treatment_no">
+                <input style="display: none;" value="{{ detail.id }}" name="treatment_id_delete_treatment" id="treatment_id_delete_treatment">
+
+                <button id="{{ detail.n_th_treatment }}" type="submit" style="border-radius: 50px; margin-right:10rem; width:10rem; "  class=" btn btn-danger btn-submit-regis-form register-form-btn-shape"> Remove all images </button>
+            </form> -->
+
+
+            <form  action="{% url 'delete_treatment_detail' %}" method="post" enctype="multipart/form-data" onsubmit="disableButton();" >
+                {% csrf_token %}
+                
+                <input style="display: none;" value="{{ patient.id }}" name="patient_id_detete_treatment" id="patient_id_detete_treatment">
+                <input style="display: none;" value="{{ detail.n_th_treatment }}" name="treatment_no" id="treatment_no">
+                <input style="display: none;" value="{{ detail.id }}" name="treatment_id_delete_treatment" id="treatment_id_delete_treatment">
+
+                <button id="{{ detail.n_th_treatment }}" type="submit" style="border-radius: 50px; margin-right:10rem" class=" btn btn-danger btn-submit-regis-form register-form-btn-shape"> Remove </button>
+            </form>
+
+            
+
+           </div>
+                
+    
+        </div>
+
+    {% endfor %}
+
+    <!-- ------------- Main container that shows all the treatment of the patients  ends -------------- -->
+     
+
+    <!-- ------------------------ Form Add treatment details ------------------------ -->
+    
+
+    <div style="display: none;" id="patient-treatment-detail-form"  class="main-container-register-patient-form" >
+
+        <div class="heading-form-and-info-div">Add Treatment for Patient</div>
+
+        <div class="secondeary-container-resgister-patinet-form">
+
+            <form id="change-patient-detials-form"  action="{% url 'save_treatment_details' %}" method="post" enctype="multipart/form-data" onsubmit="return confirm('Do you want to save this treatment details?');" class="">
+                {% csrf_token %}
+            
+                <div class="mb-4 div-container-input">
+                    <label  class="label-add-trt-show-det-heading">Patient Name: </label>
+                    <label  class="mr-5 label-add-trt-show-det-field">{{ patient.name }} </label>
+
+                    <label  class="label-add-trt-show-det-heading" >Id: </label>
+                    <label  class="mr-5 label-add-trt-show-det-field">{{ patient.id }}</label>
+
+                    <label  class="label-add-trt-show-det-heading" >Treatment no. : </label>
+                    <label  class="label-add-trt-show-det-field" >{{ treatment_no }}</label>
+                </div>
+                
+                <hr>
+                
+                <div class="mb-5 div-container-textarea">
+                    <label class="label-textarea-register-form">Dignosis</label>  <!-- Problem in detail -->
+                    <textarea class="textarea-form-and-info" id="problem" name="problem" rows="3">NA</textarea>
+
+                    <label class="label-textarea-register-form">Symptoms</label>  <!-- Problem in detail -->
+                    <textarea class="textarea-form-and-info" id="symptoms" name="symptoms" rows="3">NA</textarea>
+                </div>
+
+                <hr>
+
+                <div class="mb-4 div-container-input">
+                    
+                    <label class="label-input-register-form">Blood Pressure</label>
+                    <input type="number" class="mr-1 inpt-format-register-form input-vital-class" id="blood_pressure" name="blood_pressure" placeholder="" max="999" min="0">
+                    <label for="" class="mr-5 vitals-unit-shot">( mmHg )</label>
+                    
+                    <label class="label-input-register-form">Oxygen</label>
+                    <input type="number" class="mr-1 inpt-format-register-form input-vital-class" id="oxygen" name="oxygen" placeholder=""  max="999" min="0">
+                    <label for="" class="mr-5 vitals-unit-shot">( % )</label>
+
+                    <label  class="label-input-register-form">Pulse</label>
+                    <input type="number" class="mr-1 inpt-format-register-form input-vital-class" id="pulse" name="pulse" placeholder=""  max="999" min="0">
+                    <label for="" class="mr-5 vitals-unit-shot">( BPM )</label>
+
+
+                    <label  class="label-input-register-form">Sugar</label>
+                    <input type="number" class="mr-1 inpt-format-register-form input-vital-class" id="sugar" name="sugar" placeholder=""  max="999" min="0">
+                    <label for="" class="mr-5 vitals-unit-shot">( mmol/L )</label>
+                    
+                    <br class="mt-3">
+                    <label  class="mt-3 label-input-register-form">Weight</label>
+                    <input type="number" class="mt-3 mr-1 inpt-format-register-form input-vital-class" id="weight" name="weight" placeholder=""  max="999" min="0">
+                    <label for="" class="mt-3 mr-5 vitals-unit-shot">( kgs )</label>
+
+                    
+                    <div class="mt-5 mb-5 div-container-textarea">
+                        <label  class="mr-2 label-input-register-form">Vitals (Extra)</label>
+                        <textarea class="textarea-form-and-info" id="vital_extra" name="vital_extra" rows="3">NA</textarea>
+                    </div>
+                    
+                </div>
+
+                <hr>
+
+                <div class="mb-5 div-container-textarea">
+                    <label class="label-textarea-register-form">Treatmentment Given</label>  <!-- Problem in detail -->
+                    <textarea class="textarea-form-and-info" id="treatment_given" name="treatment_given" rows="3">NA</textarea>
+
+                    <label class="label-textarea-register-form">Medical Prescribed</label>  <!-- Problem in detail -->
+                    <textarea class="textarea-form-and-info"  id="medicine_prescribed" name="medicine_prescribed" rows="3">NA</textarea>
+                </div>
+                    
+                <hr>
+                
+
+                <div class="mb-4 div-container-input">
+
+                    <label class="mt-2 label-input-register-form" for="startDate">Current checkup date</label>
+                    <input id="mt-2 current_checkup_date" name="current_checkup_date" class="inpt-format-register-form" type="date" />
+
+                    <label class="inpt-label-placing label-input-register-form" for="startDate">Next checkup date</label>
+                    <input id="next_checkup" name="next_checkup" class="inpt-format-register-form" type="date" />
+            
+              
+                </div>
+
+                <hr>
+
+                <div class="mb-4 div-container-input">
+                    
+                    <label class="label-input-register-form">Fess charged</label>
+                    <input type="number" class="mr-5 inpt-format-register-form input-vital-class" id="fees_charged" name="fees_charged" placeholder="">
+                    
+                    <label class="label-input-register-form">Fees paid</label>
+                    <input type="number" class="mr-5 inpt-format-register-form input-vital-class"  id="fees_paid" name="fees_paid" placeholder="" onfocusout="show_remaining_fees()">
+
+                    <label  class="label-input-register-form">remaining</label>
+                    <input type="number" class="mr-5 inpt-format-register-form input-vital-class" id="fees_remaining" name="fees_remaining" placeholder="" value="" disabled onclick="show_remaining_fees()" >
+
+
+                </div>
+
+                <hr>
+
+                <div class="mt-5 mb-5 div-container-textarea">
+                    <label class="label-textarea-register-form">Remarks</label>  <!-- Problem in detail -->
+                    <textarea class="textarea-form-and-info" id="remarks" name="remarks" rows="3">NA</textarea>
+
+                    
+                </div>
+
+                <hr>
+
+                <div>
+                    <label for="images">Upload Images:</label>
+                    <input type="file" id="images" name="images" multiple onchange="previewImages();" style="display:none;">
+                    <button type="button" onclick="document.getElementById('images').click();">Select Images</button>
+                
+                    <div id="image-preview-container"></div>
+
+                    <hr>
+                
+                    <button style="border-radius: 50px;" class="mt-5 ml-5 btn btn-primary btn-submit-regis-form register-form-btn-shape" type="submit">Submit</button>
+
+                    <button style="border-radius: 50px;" type="reset" onclick="showForm()" class="mt-5 btn btn-danger btn-hide-regis-form register-form-btn-shape">Cancel</button>
+
+                
+                </div>
+                    
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- --------------------- Add treatment details ends ---------------------- -->
+
+
+    
+
+    <!-- -------------------------- Script ->> ------------------------------ -->
+
+
+
+    <!-- ---------------------------- Script for image preview ---------------------------- -->
+
+    <script>
+
+        let cropper;
+
+        // Preview and initialize cropper on image upload
+        function previewImage(event) {
+
+            document.getElementById('btn-submit-registration-form-without-image-id').style.display = 'none';
+            document.getElementById('btn-submit-registration-form-with-image-id').style.display = 'block';
+
+            const imagePreview = document.getElementById('imagePreview');
+            const cropContainer = document.getElementById('cropContainer');
+            imagePreview.src = URL.createObjectURL(event.target.files[0]);
+            cropContainer.style.display = 'block';
+
+            // Initialize Cropper
+            if (cropper) cropper.destroy();
+            cropper = new Cropper(imagePreview, {
+                aspectRatio: 1,  // Ensure symmetrical cropping (1:1 aspect ratio)
+                viewMode: 1,
+            });
+        }
+
+        // Crop image and submit form
+        function cropImage() {
+            if (cropper) {
+                const croppedCanvas = cropper.getCroppedCanvas({
+                    width: 300,
+                    height: 300,
+                });
+
+                // Convert canvas to base64 image data
+                document.getElementById('croppedImage').value = croppedCanvas.toDataURL('image/jpeg');
+                
+                // Submit form
+                document.getElementById('change-patient-detials-form').submit();
+            }
+        }
+    </script>
+
+
+
+    <script>
+                
+        let selectedFiles = [];
+
+        function previewImages() {
+            const previewContainer = document.getElementById('image-preview-container');
+            const inputFiles = Array.from(document.getElementById('images').files);
+
+            // Add only the newly selected files to the array
+            selectedFiles = [...inputFiles];
+
+            // Clear the preview container to prevent duplication
+            previewContainer.innerHTML = '';
+
+            // Loop through selectedFiles to display them
+            selectedFiles.forEach((file, index) => {
+                if (file.type.startsWith('image/')) {
+                    const imgElement = document.createElement("img");
+                    imgElement.classList.add("img-preview");
+                    imgElement.file = file;
+                    imgElement.dataset.index = index;
+
+                    // Add onclick to allow removing the image
+                    imgElement.onclick = function() {
+                        removeImage(index);
+                    };
+
+                    previewContainer.appendChild(imgElement);
+
+                    const reader = new FileReader();
+                    reader.onload = (function(aImg) {
+                        return function(e) {
+                            aImg.src = e.target.result;
+                        };
+                    })(imgElement);
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+
+        // Function to remove an image from selectedFiles array
+
+        function removeImage(index) {
+            // Remove the selected image from the array
+            selectedFiles.splice(index, 1);
+
+            // Trigger previewImages to update the preview
+            updatePreview();
+        }
+
+        function updatePreview() {
+            const previewContainer = document.getElementById('image-preview-container');
+            previewContainer.innerHTML = '';
+
+            selectedFiles.forEach((file, index) => {
+                if (file.type.startsWith('image/')) {
+                    const imgElement = document.createElement("img");
+                    imgElement.classList.add("img-preview");
+                    imgElement.file = file;
+                    imgElement.dataset.index = index;
+
+                    imgElement.onclick = function() {
+                        removeImage(index);
+                    };
+
+                    previewContainer.appendChild(imgElement);
+
+                    const reader = new FileReader();
+                    reader.onload = (function(aImg) {
+                        return function(e) {
+                            aImg.src = e.target.result;
+                        };
+                    })(imgElement);
+                    reader.readAsDataURL(file);
+                }
+            });
+        }
+    </script>
+
+
+    <script>
+
+        let isPatientTreatmentFormVisible = false
+
+        let isEditTreatmentDetailsVisible = false
+
+        let isChangePatientFormVisible = false 
+
+        document.addEventListener('keydown', function(event) {
+            if (event.key === "Escape") { // Or event.keyCode === 27
+              // Code to execute when the Escape key is pressed
+              document.getElementById('patient-treatment-detail-form').style.display = 'none';
+              document.getElementById('change-patient-details-form').style.display = 'none';
+              document.getElementById('patient-edit-treatment-detail-form').style.display = 'none';
+
+            }
+        });
+
+
+        function showForm() {
+            if (isPatientTreatmentFormVisible) {
+                document.getElementById('patient-treatment-detail-form').style.display = 'none';
+                isPatientTreatmentFormVisible = false
+            }
+            else {
+                document.getElementById('patient-treatment-detail-form').style.display = 'block';
+
+                // disabling the change patient profile data form 
+                document.getElementById('change-patient-details-form').style.display = 'none';
+
+                isPatientTreatmentFormVisible = true
+            }
+        }
+
+
+        
+        function showChangePatientForm() {
+            
+            if (isChangePatientFormVisible) {
+                document.getElementById('change-patient-details-form').style.display = 'none';
+                isChangePatientFormVisible = false
+            }
+            else {
+                verification = confirm("Do you really want to change the patient profile data?")
+                if(verification) {
+                    document.getElementById('change-patient-details-form').style.display = 'block';
+                    isChangePatientFormVisible = true
+                }
+            }
+        }
+
+        function showHideEditTreatmentDetails() {
+            if (isEditTreatmentDetailsVisible) {
+                document.getElementById('patient-edit-treatment-detail-form').style.display = 'none';
+                isPatientTreatmentFormVisible = false
+                
+            }
+            else {
+                document.getElementById('patient-edit-treatment-detail-form').style.display = 'block';
+                isPatientTreatmentFormVisible = true
+            }
+        }
+
+
+        function show_remaining_fees() {
+            let charged_fees = document.getElementById('fees_charged').value;
+            let fee_paid = document.getElementById('fees_paid').value;
+
+
+            charged_fees = parseFloat(charged_fees)
+
+            console.log("parsed float = " + parseFloat(charged_fees))
+            fee_paid = parseFloat(fee_paid);
+            let remaining_fees = charged_fees - fee_paid;
+
+            if(charged_fees < 0) {
+                alert('Charged fees cannot be less than 0 !')
+            }
+
+
+            if(fee_paid < 0) {
+                alert('Paid fees cannot be less than 0 !')
+            }
+
+            if(remaining_fees < 0) {
+                alert('Fee remaining is less than 0 ! You might have entered wrong values for the fees paid or fees charged')
+            }
+
+
+            document.getElementById('fees_remaining').value = remaining_fees + "";
+
+        
+        }
+
+        isBig = false
+        function showImgInBigSize() {
+            if(!isBig)
+            {
+                document.getElementById('patient-img-cont').className = 'patient-pi2';
+                isBig = true;
+            }
+            else 
+            {
+                document.getElementById('patient-img-cont').className = 'patient-pi';
+                isBig = false;
+            }
+        }
+
+    </script>
+
+    <!-- Bootstrap boiler plate -->
+
+    <script 
+        src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous">
+    </script>
+    <script 
+        src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" 
+        crossorigin="anonymous">
+    </script>
+    <script 
+        src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" 
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous">
+    </script>
+
+    <!-- Bootstrap ends here -->
+
+</body>
+</html>

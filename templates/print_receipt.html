@@ -1,0 +1,133 @@
+{% load static %}
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Print Receipt</title>
+
+    <link rel="stylesheet" href="{% static 'style_print_receipt.css' %}">
+    <link rel="stylesheet" href="{% static 'style_base_components.css' %}">
+
+</head>
+<body >
+
+    <div class="background">
+         <div class="heading-clinik-name">
+             MAA RENUKA HOMOEO CARE 
+         </div>
+         <div class="heading-name">
+             DR.VISHAL DHOTE 
+             <br>
+             BHMS 
+         </div>
+ 
+         <div class="heading-about">
+             CONSULTANT HOMOEOPATHIC PHYSICIAN
+         </div>
+         
+         <div class="div-timing">
+             TIME 10 AM TO 1:30 PM
+             <br>
+             <label for="" style="margin-right:45px"></label> 4 PM TO 8:30 PM 
+         </div>
+ 
+         <div class="division-1"></div>
+ 
+         <div class="patient-info">
+             {{ patient_detail.name }} * 
+             {{ patient_detail.age }} Years * 
+             
+             {% if patient_detail.gender == 'm'  %}
+                 Male
+             {% elif patient_detail.gender == 'f'  %}
+                 Female
+             {% else %} 
+                 Other
+             {% endif %}
+         </div>
+ 
+ 
+         <div class="div-complaint">
+             <label for="" class="heading-type-1">Complaint: </label>
+             <label for="" class="field-type-1">{{ trt_details.symptoms }}</label>
+         </div>
+ 
+         <div>
+             <label for=""  class="heading-type-3">Vitals</label>
+             <br>
+             <br>
+            {% if trt_details.pulse != '' %}
+                 <label for=""  class="mt-4 heading-type-2">Pulse</label>
+                 <label for="" class="field-type-1"> {{ trt_details.pulse }} </label>
+                 <br>
+             
+            {% endif %}
+ 
+             
+             {% if trt_details.blood_pressure != '' %}
+                 <label for=""  class="heading-type-2">Blood Pressure</label>
+                 <label for="" class="field-type-1"> {{ trt_details.blood_pressure }} </label>
+                 <br>
+             {% endif %}
+ 
+             
+ 
+             {% if trt_details.oxygen != '' %}
+                 <label for=""  class="heading-type-2">Pulse</label>
+                 <label for="" class="field-type-1"> {{ trt_details.oxygen }} </label>
+                <br>
+
+             {% endif %}
+             
+ 
+             {% if trt_details.sugar != '' %}
+                 <label for=""  class="heading-type-2">Sugar</label>
+                 <label for="" class="field-type-1"> {{ trt_details.sugar }} </label>
+             <br>
+
+             {% endif %}
+ 
+ 
+             {% if trt_details.weight != '' %}
+                 <label for=""  class="heading-type-2">Weight</label>
+                 <label for="" class="field-type-1"> {{ trt_details.weight }} </label>
+             <br>
+
+             {% endif %}
+ 
+ 
+             
+             <textarea for="" class="txt-area-extra-vital"> {{ trt_details.vitals_extra }} </textarea>
+
+         </div>
+ 
+         <div class="div-complaint">
+             <label for="" style="margin-top: -5px;" class="heading-type-1">Dignosis: </label>
+             <label for="" class="field-type-1">{{ trt_details.problem_detail }}</label>
+         </div>
+ 
+         <div class="container-rx-image">
+             <img  src="../static/imgs/rx_logo.jpg" alt="">
+         </div>
+ 
+         <div>
+             <label for="" class=""></label>
+             <textarea class="txt-area-medicine-pres">{{ trt_details.medicine_prescribed }}</textarea>
+         </div>
+ 
+         <div class="division-1"></div>
+ 
+         <div style="margin-top:20px; text-align:center" class="heading-about">
+             <div>Address: Adlak complex near shiv mandir itarsi road sadar betul </div>
+             <br style="margin-top: 5px;">
+             <div>Mobile no 7223027932 7509672304</div>
+         </div>
+    </div>
+     
+     
+ </body>
+</html>

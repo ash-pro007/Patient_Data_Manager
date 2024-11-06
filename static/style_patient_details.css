@@ -1,0 +1,387 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+}
+
+
+/*  */
+
+.main-div-forl {
+    background-color: rgba(255, 255, 255, 0.89);
+    padding: 2%;
+    width: 30%;
+    height: fit-content;
+    margin-top:2%;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    border-radius: 10px;
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    color: rgb(65, 65, 65);
+}
+
+.div-div-img-horizontal {
+    content: inherit;
+    margin: auto;
+    display: flex;
+}
+
+.patient-pi {
+    border-radius: 50%;
+    margin-left: 3.2rem;
+    width: 50%;
+    transition: all .5s ease-in-out;
+
+}
+
+.patient-pi2 {
+    margin-right: 20px;
+    margin-top: 0;
+    width: 20rem;
+    margin-bottom: 2rem;
+    border-radius: 40px;
+    border-width: 2px;
+    border-color: #444444;
+    
+    overflow: hidden;
+
+    transition: all .5s ease-out;
+
+}
+
+
+.div-heading {
+    text-align: center;
+    font-size:  1.2rem;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin-bottom: 2%;
+}
+
+
+
+.field-headings {
+    text-align: left;
+    font-size: 0.7rem;
+    font-weight: 500;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.field-values {
+    font-size: 0.68rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.div-click-to-go {
+    display: flex;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10rem;
+    margin-top: 2%;
+    text-align: center;
+    
+}
+
+th, td {
+    padding-right: 10px;
+    padding-left: 10px;
+    padding-top: 8px;
+    }
+
+
+
+@media screen and (max-width: 600px) {
+    .container-div  {display: block;}
+    .column {content: "";
+            float: none;
+            width: 100%;
+                }
+}
+
+
+#btn-edt-profile {
+    margin-right: 4%;
+    width: 15rem;
+}
+
+#btn-add-treatment{
+    margin-right: 4%;
+    width: 15rem;
+}
+
+#btn-clear-dues{
+    width: 15rem;
+}
+
+
+/* --------------- Patient details related div --------------- */
+
+.div-bg-show-all-dues-in-patient-detail {
+    font-size: 1.5rem;
+    color:#2c2c2cab;
+    text-shadow:  2px 2px 6px #ff251dc4;
+    border-width: 0;
+    border-radius: 20px;
+}
+
+.div-bg-show-no-dues-in-patient-detail {
+    font-size: 1.5rem;
+    color:#2c2c2cab;
+    text-shadow:  2px 2px 6px #1dff61c4;
+    border-width: 0;
+    border-radius: 20px;
+}
+
+/* -------------- Patient details related div ends ------------ */
+
+
+
+
+/* -------------- show treatment details -------------- */
+
+.main-container {
+    display: flex;
+}
+
+.heading-all-details {
+    text-align: center;
+    font-size: 1.5rem;
+}
+
+.upper-conatiner-all-treatment-details {
+    max-width: 40rem;
+    margin-right: 10rem;
+    margin-top: 5rem;
+}
+
+.conatiner-all-treatment-details {
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    display: block;
+    border-radius: 10px;
+    height: fit-content;
+    margin: auto auto;
+    padding: 4rem;
+}
+
+
+.label-show-patient-details-heading {
+    font-size: .88rem;
+    font-weight: 500;
+    margin-left: 10px;
+}
+
+
+.label-show-patient-details-field {
+    font-size: .78rem;
+    font-weight: 500;
+    margin-left: 10px;
+}
+
+.hr-like-cut-for-seperation {
+    margin-top: 12px;
+    margin-left: -2rem;
+    height: 2px;
+    background-color: #4bc5b9;
+    display: block;
+    width: 55rem;
+    border-radius: 20px;
+    
+
+}
+
+
+/* ------------ show treatment details ends ----------- */
+    
+
+/* -------------- Add Treatment form --------------- */
+
+.div-patient-treatment {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+    padding-top: 60px;
+    border-radius: 20px;
+    
+}
+
+
+.registrion-heading-form-and-info-div {
+    color: rgb(56, 56, 56);
+    background-color: white;
+    font-weight: bold;
+    font-size: 3rem;
+    margin-bottom: 3%;
+    text-align: center;
+}
+
+.btn-hide-regis-form {
+            
+    width: 50%;
+    text-align: center;
+    margin-left: 20%;
+
+}
+
+/* Modal Content/Box */
+.form-container-formm {
+    background-color: #fefefe;
+    margin: 5% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Could be more or less, depending on screen size */
+    max-width: 600px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    position: relative;
+    animation-name: animatetop;
+    animation-duration: 0.4s;
+    
+}
+
+/* Add Animation */
+@keyframes animatetop {
+    from {top: -300px; opacity: 0}
+    to {top: 0; opacity: 1}
+}
+
+/* The Close Button */
+.form-container-formm button[type="button"] {
+    background-color: #f44336;
+    color: white;
+    padding: 10px 18px;
+    border: none;
+    cursor: pointer;
+    width: auto;
+    margin: 8px 0;
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.form-container-formm button[type="button"]:hover {
+    background-color: #d32f2f;
+}
+
+
+
+/*  ::::::::::::::::::::: Add Treatment form between but end is below  ::::::::::::::::::::: */
+
+
+.label-add-trt-show-det-heading {
+    font-weight: 600;
+    font-size: .86rem;
+}
+
+.label-add-trt-show-det-field {
+    font-size: .83rem;
+    font-weight: 400;
+}
+
+.input-vital-class {
+    width: 5rem;
+    padding-left: 5px;
+}
+
+.label-input-vital-class {
+    width: 10rem;
+    padding-left: 5px;
+}
+
+
+
+
+
+
+/* ----------- Add Treatment form ends ----------- */
+
+
+
+/* ----------- all treatment details div css ----------- */
+
+.div-all-treatment-details {
+    
+    padding-top: 3rem;
+    margin-top: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 5rem;
+    width: 100%;
+    background-color: rgba(128, 200, 192, 0.119)
+}
+
+
+.div-conatiner-all-treatment-details {
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    display:inline-block;
+    border-radius: 10px;
+    
+    margin: auto auto;
+    padding: 2.8rem;
+    width: 25rem;
+    max-width: 25rem;
+    margin: 20px;
+
+    
+   
+}
+
+.tr-treatment-heading {
+    font-size: .8rem;
+}
+
+.tr-treatment-field {
+    font-size: .75rem;
+}
+
+.text-wrap-for-th {
+    overflow-wrap: break-word;
+    word-wrap: break-word; /* For older browsers */
+    word-break: break-all; /* This will break long strings into the next line */
+}
+
+.treatment-no-st {
+    background-color: #4bc5b9;
+    color: white;
+    border-radius: 60px;
+    font-size: .79rem;
+    
+}
+
+.treatment-no-st {
+    border-radius: 60px;
+    font-size: .79rem;
+    
+}
+
+.fees-remaining-red-background {
+    background-color: rgb(255, 112, 112); 
+    color:white; padding: 20px;
+    max-width: 40rem;
+   
+}
+/* ----------- all treatment details div css ----------- */
+
+.remaining-fees-table-heading {
+    text-align: center;
+    font-size: 2rem;
+    font-weight: 600;
+    margin-bottom: 20px;
+}
+
+
+/* -------------- Vital styling -------------- */
+
+.vitals-unit-shot {
+    font-size: 12px;
+    font-weight: 500;
+}
+
+/* ----------- Vital styling ends ------------ */

@@ -1,0 +1,63 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+
+    <link rel="stylesheet" href="{% static 'style_about.css' %}">
+    <link rel="stylesheet" href="{% static 'style_base_components.css' %}">
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" 
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" 
+          crossorigin="anonymous">
+
+    <!-- ---------------- from w3 school for icons ---------------- -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+
+    <!-- ---------------- Cooper Libraray for js  ----------------- -->
+</head>
+<body>
+    
+
+     <!-- ------------------------- Nav bar -------------------------  -->
+     <nav class="hc-navbar">
+        <div class="hc-navbar-container">
+            <a href="home" class="hc-navbar-brand">PDM</a>
+            <button class="hc-navbar-toggler" onclick="toggleMenu()">&#9776;</button>
+            <div class="hc-navbar-menu" id="navbarMenu">
+
+                
+                <a href="home" class="hc-navbar-item">Home <i class="fa fa-home" style="font-size:15px"></i></a>
+              
+                <a href="{%  url 'about' %}"  style="color: #f44336; font-weight: 500;"  class="hc-navbar-item">About</a>
+
+                <a id="a-logout" style="margin-left: 3rem;" href="signout" class="hc-navbar-item">Logout <i class="fa fa-sign-out" style="font-size:15px"></i></a>
+
+                <a href="#" onclick="chnageGridTableView()" class="hc-navbar-item">C V</i> </a>
+
+            </div>
+        </div>
+    </nav>
+
+
+    <div class="inst-container">
+        <div class="heading">General Instrunctions</div>
+        
+        <div class="points">1. Always use navigation bar to navigate</div>
+        <div class="points">2. Do not refresh page, specially when you have recently sumbitted any form [viz., Add Patient and Add Treatment forms]
+                and also when do not refresh when you change any details by any form.
+        </div>
+        
+        <div class="points">3. When you want to refresh go home page and refresh by tapping on refresh PDM logo</div>
+
+    </div>
+
+</body>
+</html>

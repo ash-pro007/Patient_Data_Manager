@@ -1,0 +1,139 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f9;
+    /* background-image: linear-gradient(to right, #e8fdfd, rgb(255, 255, 255)); */
+
+}
+
+
+
+/* ----------------- All Patient's Data css ----------------- */
+
+
+.container-gridView-div {
+    display: block;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 3%;
+}
+
+
+
+.patient-data-thead {
+    font-size: .8rem;
+    color: #02af9e;
+}
+
+.patient-data-tbody {
+    font-size: .79rem;
+    font-weight: 500;
+    color: rgb(75, 75, 75);
+}
+
+.patient-pi-grid {
+    width: 40px;
+}
+
+.go-to-treatment-btn {
+    background-color: #96ece4;
+    border-radius: 100px;
+    box-shadow: rgba(44, 187, 163, 0.2) 0 -25px 18px -14px inset,rgba(44, 187, 175, 0.15) 0 1px 2px,rgba(44, 187, 99, .15) 0 2px 4px,rgba(44, 187, 99, .15) 0 4px 8px,rgba(44, 187, 99, .15) 0 8px 16px,rgba(44, 187, 99, .15) 0 16px 32px;
+    color: #02af9e;
+    cursor: pointer;
+    display: inline-block;
+    font-family: CerebriSans-Regular,-apple-system,system-ui,Roboto,sans-serif;
+    padding: 7px 20px;
+    text-align: center;
+    text-decoration: none;
+    transition: all 250ms;
+    border: 0;
+    font-size: 16px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+}
+
+.go-to-treatment-btn:hover {
+    box-shadow: rgba(44,187,99,.35) 0 -25px 18px -14px inset,rgba(44,187,99,.25) 0 1px 2px,rgba(44,187,99,.25) 0 2px 4px,rgba(44,187,99,.25) 0 4px 8px,rgba(44,187,99,.25) 0 8px 16px,rgba(44,187,99,.25) 0 16px 32px;
+    transform: scale(1.05) rotate(-.5deg);
+}
+/* --------------- All Patient's Data css ends --------------- */
+
+
+/* ---------------- nav bar -> search patient ---------------- */
+
+   
+#btn-search-patient {
+    display: block;
+}
+
+
+/* --------------------- Register patient form css (mainly upload image) ------------------------ */
+
+
+
+/* ------------------ Register patient form css (mainly upload image) ends ---------------------- */
+
+
+
+
+
+/* -------------- nav bar -> search patient ends ------------ */
+
+
+.container-main-div {
+    display: block;
+}
+
+
+.container-main-div {
+    padding-top: 3rem;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 5rem;
+    width: 100%;
+    background-color: rgba(128, 200, 192, 0.119)
+ }
+
+ .main-container-grid-view {
+    box-shadow: rgb(38, 57, 77) 0px 20px 30px -10px;
+    display: inline-block;
+    border-radius: 10px;
+    height: fit-content;
+    margin: auto auto;
+    padding: 4rem;
+    width: 25rem;
+    margin: 20px;
+ }
+
+ .patient-pi {
+    margin-left: 45%;
+    margin-top: 5%;
+    width: 100%;
+    margin-bottom: 2rem;
+}
+
+.div-div-img-horizontal {
+    content: inherit;
+    margin: auto;
+    display: flex;
+}
+
+.field-headings {
+    text-align: left;
+    font-size: 0.81rem;
+    font-weight: bold;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.field-values {
+    font-size: 0.78rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+
+

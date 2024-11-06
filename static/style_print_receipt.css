@@ -1,0 +1,139 @@
+ body {
+    margin: 10px;
+    padding: 10px;
+    border-width: 2px;
+   
+    
+    
+ }
+
+ .background {
+   position: absolute;
+   height: 100%;
+   width: 100%;
+   background: url('../static/imgs/print_receipt_bg.jpeg');
+   background-size: cover;
+   background-position: center;
+   
+ }
+
+ .heading-clinik-name {
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 2.0rem;
+    font-weight: 800;
+    color: #3822fd;
+    margin-bottom: 20px;
+ }
+
+ .heading-name {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.3rem;
+    font-weight: 800;
+    color: #226ffd;
+    margin-bottom: 8px;
+ }
+
+ .heading-about {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 1.1rem;
+    font-weight: 800;
+    color: #226ffd;
+    margin-bottom: 25px;
+ }
+
+ .div-timing {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 0.9rem;
+    font-weight: 800;
+    color: #444850;
+    margin-bottom: 25px;
+ }
+ 
+
+ .division-1 {
+    margin-top: 5px;
+    height: 2px;
+    border-top-width: 0px;
+    border-left-width: 0px;
+    border-right-width: 0px;
+    border-bottom-width: 1px;
+    border-style: dashed;
+    border-color: black;
+    
+ }
+
+ .patient-info {
+    margin-top:10px;
+    margin-bottom: 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+    margin-top: 20px;
+ }
+
+ .div-complaint {
+    margin-bottom: 15px;
+ }
+
+
+.heading-type-1 {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.2rem;
+    font-weight: 600;
+}
+
+.heading-type-2 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.1rem;
+    font-weight: 500;
+    margin-left: 15px;
+}
+
+.heading-type-3 {
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   font-size: 1.3rem;
+   font-weight: 500;
+}
+
+
+.field-type-1 {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 1.0rem;
+    font-weight: 400;
+}
+
+.txt-area-extra-vital {
+   margin-top: 10px;
+   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   font-size: 1.0rem;
+   font-weight: 500;
+  
+   width: 90%;
+   height: 5rem;
+   border-width: 0px;
+   background: inherit;
+   margin-left: 15px;
+}
+
+
+.container-rx-image {
+  margin-top: 40px;
+  mix-blend-mode: multiply;
+}
+
+.txt-area-medicine-pres {
+   font-family: 'Times New Roman', Times, serif;
+   font-size: 1.2rem;
+   font-weight: 400;
+   width: 90%;
+   height: 15rem;
+   border-width: 0px;
+   margin-left: 30px;
+   margin-top: 20px;
+   background: inherit;
+   letter-spacing: 1px;
+
+}
