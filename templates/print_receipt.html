@@ -56,12 +56,12 @@
              <label for="" class="field-type-1">{{ trt_details.symptoms }}</label>
          </div>
  
-         <div>
-             <label for=""  class="heading-type-3">Vitals</label>
-             <br>
-             <br>
-            {% if trt_details.pulse != '' %}
-                 <label for=""  class="mt-4 heading-type-2">Pulse</label>
+         <label for=""  class="heading-type-3">Vitals</label>
+        
+         <div class="vitals-container">
+        
+            {% if trt_details.pulse != '' and trt_details.pulse != 0 %}
+                 <label for=""  class="heading-type-2">Pulse</label>
                  <label for="" class="field-type-1"> {{ trt_details.pulse }} </label>
                  <br>
              
@@ -99,10 +99,10 @@
 
              {% endif %}
  
- 
-             
-             <textarea for="" class="txt-area-extra-vital"> {{ trt_details.vitals_extra }} </textarea>
+         </div>
 
+         <div class="vitals-extra-container"> 
+            <textarea for="" class="txt-area-extra-vital"> {{ trt_details.vitals_extra }} </textarea>
          </div>
  
          <div class="div-complaint">

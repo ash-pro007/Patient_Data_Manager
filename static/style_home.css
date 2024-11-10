@@ -137,3 +137,16 @@ body {
 
 
 
+
+/* ----------------------- Table to show patient ----------------------- */
+
+.row-background {
+
+}
+
+.row-background:hover {
+    background-color: #defcfb6c;
+    
+}
+
+/* --------------------- Table to show patient ends --------------------- */
