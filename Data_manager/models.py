@@ -25,7 +25,7 @@ class Patient_treatment_details(models.Model):
     problem_detail = models.TextField()
     symptoms = models.TextField()
 
-    blood_pressure = models.CharField(max_length=4)
+    blood_pressure = models.CharField(max_length=8)
     oxygen = models.CharField(max_length=4)
     pulse = models.CharField(max_length=4)
     sugar = models.CharField(max_length=4)
